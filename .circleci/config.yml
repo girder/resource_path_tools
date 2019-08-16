@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: zachmullen/tox-and-node
+      - image: circleci/mongo:4.0-ram
+    steps:
+      - checkout
+      - run:
+          name: Run tests via tox
+          # Piping through cat does less buffering of the output but can
+          # consume the exit code
+          command: tox | cat; test ${PIPESTATUS[0]} -eq 0
+      - run:
+          name: Install Codecov client
+          command: pip install codecov
+      - run:
+          name: Upload coverage
+          # Retry as codecov can be flaky
+          command: for i in $(seq 1 10); do [ %i -gt 1 ] && echo "retrying $i" && sleep 5; codecov --required --disable search pycov gcov --root project --file .tox/coverage/py_coverage.xml && s=0 && break || s=$?; done; (exit $s)
+  deploy:
+    docker:
+      - image: zachmullen/tox-and-node
+      - image: circleci/mongo:4.0-ram
+    steps:
+      - checkout
+      - deploy:
+          command: tox -e release
+
+workflows:
+  version: 2
+  checkout_test_deploy:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
