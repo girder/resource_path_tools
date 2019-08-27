@@ -49,7 +49,7 @@ setup(
     keywords='girder-plugin, resource_path_tools',
     packages=find_packages(exclude=['test', 'test.*']),
     url='https://github.com/girder/resource_path_tools',
-    se_scm_version={'local_scheme': prerelease_local_scheme},
+    use_scm_version={'local_scheme': prerelease_local_scheme},
     zip_safe=False,
     entry_points={
         'girder.plugin': [
