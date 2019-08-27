@@ -17,7 +17,7 @@ def prerelease_local_scheme(version):
     """
     from setuptools_scm.version import get_local_node_and_date
 
-    if os.getenv('CIRCLE_BRANCH') in ('master'):
+    if os.getenv('CIRCLE_BRANCH') in ('master', ):
         return ''
     else:
         return get_local_node_and_date(version)
@@ -25,6 +25,8 @@ def prerelease_local_scheme(version):
 
 setup(
     name='girder-resource-path-tools',
+    use_scm_version={'local_scheme': prerelease_local_scheme},
+    setup_requires=['setuptools-scm'],
     author='Kitware, Inc.',
     author_email='kitware@kitware.com',
     classifiers=[
@@ -49,7 +51,6 @@ setup(
     keywords='girder-plugin, resource_path_tools',
     packages=find_packages(exclude=['test', 'test.*']),
     url='https://github.com/girder/resource_path_tools',
-    use_scm_version={'local_scheme': prerelease_local_scheme},
     zip_safe=False,
     entry_points={
         'girder.plugin': [
