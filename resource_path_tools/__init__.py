@@ -1,8 +1,7 @@
-import cherrypy
-import six
-from six.moves import urllib
+import importlib.metadata
+import urllib.parse
 
-from pkg_resources import DistributionNotFound, get_distribution
+import cherrypy
 
 import girder.api.docs
 import girder.api.rest
@@ -23,8 +22,8 @@ from girder.utility import path as path_util
 from girder.utility import ziputil
 
 try:
-    __version__ = get_distribution(__name__).version
-except DistributionNotFound:
+    __version__ = importlib.metadata.version(__name__)
+except importlib.metadata.PackageNotFoundError:
     # package is not installed
     pass
 
@@ -42,7 +41,7 @@ def _matchRoute(self, method, path):
                 wildcards = {}
                 if route[-1].startswith('+'):
                     wildcards[route[-1][1:]] = path[routelen - 1:]
-                    for routeComponent, pathComponent in six.moves.zip(
+                    for routeComponent, pathComponent in zip(
                             route[:-1], path[:routelen - 1]):
                         if routeComponent[0] == ':':  # Wildcard token
                             wildcards[routeComponent[1:]] = pathComponent
@@ -125,8 +124,7 @@ class PathToolsResource(girder.api.v1.resource.Resource):
             zip = ziputil.ZipGenerator()
             for (path, file) in model.fileList(
                     doc=resource, user=user, subpath=True):
-                for data in zip.addFile(file, path):
-                    yield data
+                yield from zip.addFile(file, path)
             yield zip.footer()
         return stream
 
@@ -169,7 +167,7 @@ class PathToolsResource(girder.api.v1.resource.Resource):
 
 class ResourceFilesResource(Resource):
     def __init__(self):
-        super(ResourceFilesResource, self).__init__()
+        super().__init__()
         self.resourceName = 'files'
         self.route('GET', (), self.filesResponseRoot)
         self.route('GET', ('+path', ), self.filesResponse)
