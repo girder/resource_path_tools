@@ -13,8 +13,8 @@ Features
 
 * Redirect by path.
 
-  ``GET``, ``PUT``, ``POST``, ``DELETE`` ``/resource/path/redirect/<resource path>[/<path components>]`` will redirect to the appropriate model route for the last identifiable Girder model within the route.  
-  
+  ``GET``, ``PUT``, ``POST``, ``DELETE`` ``/resource/path/redirect/<resource path>[/<path components>]`` will redirect to the appropriate model route for the last identifiable Girder model within the route.
+
   Since only routes that the user has permission for can be accessed, this can have strange repercussions if the resource path has components that look like route paths.  For instance, ``PUT /resource/path/redirect/user/User/Public/ItemA/metadata`` will either modify an item's metadata OR alter a file named ``metadata`` within the item.
 
   Also, redirecting has a significant overhead compared to accessing a route by model and id, as the resource path must be validated and checked for permissions.

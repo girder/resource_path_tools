@@ -33,16 +33,16 @@ setup(
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12'
+        'Programming Language :: Python :: 3.13'
+        'Programming Language :: Python :: 3.14'
     ],
     description='Add resource path utility endpoints.',
     install_requires=[
-        'girder>=3.0.2',
+        'girder>=3.0.2,<5',
     ],
     license='Apache Software License 2.0',
     long_description=readme,
