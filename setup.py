@@ -41,8 +41,9 @@ setup(
         'Programming Language :: Python :: 3.14'
     ],
     description='Add resource path utility endpoints.',
+    # Note: this plugin works with both Girder 3 and Girder 5
     install_requires=[
-        'girder>=3.0.2,<5',
+        'girder>=3.0.2',
     ],
     license='Apache Software License 2.0',
     long_description=readme,
