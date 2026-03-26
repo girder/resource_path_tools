@@ -29,7 +29,8 @@ jobs:
   deploy:
     docker:
       - image: girder/tox-and-node
-      - image: mongo:5.0
+      - image: mongo:4.4
+        command: bash -c "mkdir /dev/shm/mongo && mongod --nojournal --dbpath=/dev/shm/mongo --noauth --bind_ip_all"
     steps:
       - checkout
       - deploy:
