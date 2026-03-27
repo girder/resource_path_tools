@@ -53,6 +53,7 @@ setup(
     packages=find_packages(exclude=['test', 'test.*']),
     url='https://github.com/girder/resource_path_tools',
     zip_safe=False,
+    python_requires='>=3.10',
     entry_points={
         'girder.plugin': [
             'resource_path_tools = resource_path_tools:GirderPlugin'
