@@ -157,7 +157,9 @@ class PathToolsResource(girder.api.v1.resource.Resource):
                     raise
                 used -= 1
         path = [resource['_modelType'], str(resource['_id'])] + list(path[used:])
-        path_info = ('/'.join(cherrypy.request.path_info.split('/')[:2] + path))
+        base_path = cherrypy.request.path_info.split('/v1/')[0] + '/v1'
+
+        path_info = ('/'.join([base_path] + path))
         # This locates the redirected handler
         cherrypy.request.get_resource(path_info)
         result = cherrypy.request.handler()

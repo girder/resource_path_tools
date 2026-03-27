@@ -91,7 +91,7 @@ def test_download(server, admin, user, fsAssetstore):
 
 @pytest.mark.plugin('resource_path_tools')
 def test_redirect(boundServer, admin, user, fsAssetstore):
-    # We have to use a bound server to habdle redirects properly
+    # We have to use a bound server to handle redirects properly
     createData(admin, user)
     body = json.dumps({'key': 'value'})
     headers = pytest_girder.utils.buildHeaders(
